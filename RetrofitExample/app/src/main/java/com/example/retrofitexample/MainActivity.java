@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -22,41 +23,40 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         textViewResult = findViewById(R.id.text_view_result);
-
+        OkHttpClient client = new OkHttpClient();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://jsonplaceholder.typicode.com/")
+                .baseUrl("https://hpapi.ddns.net:14245/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
 
-        Call<List<Post>> call = jsonPlaceHolderApi.getPosts();
+        Call<List<Cliente>> call = jsonPlaceHolderApi.getClientes();
 
-        call.enqueue(new Callback<List<Post>>() {
+        call.enqueue(new Callback<List<Cliente>>() {
             @Override
-            public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
+            public void onResponse(Call<List<Cliente>> call, Response<List<Cliente>> response) {
                 if(!response.isSuccessful())
                 {
                     textViewResult.setText("Code: " + response.code());
                     return;
                 }
 
-                List<Post> posts = response.body();
+                List<Cliente> clientes = response.body();
 
-                for (Post post : posts)
+                for (Cliente cliente : clientes)
                 {
                     String content = "";
-                    content += "ID: " + post.getId() + "\n";
-                    content += "User ID: " + post.getUserId() + "\n";
-                    content += "Title: " + post.getTitle() + "\n";
-                    content += "Text: " + post.getText() + "\n\n";
+                    content += "ID: " + cliente.getCod_clnt() + "\n";
+                    content += "User ID: " + cliente.getUsuario() + "\n";
+                    content += "Password: " + cliente.getSenha() + "\n";
 
                     textViewResult.append(content);
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Post>> call, Throwable t) {
+            public void onFailure(Call<List<Cliente>> call, Throwable t) {
                 textViewResult.setText(t.getMessage());
             }
         });
