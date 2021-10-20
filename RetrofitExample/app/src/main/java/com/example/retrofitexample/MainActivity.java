@@ -23,9 +23,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         textViewResult = findViewById(R.id.text_view_result);
-        OkHttpClient client = new OkHttpClient();
+        //OkHttpClient client = new OkHttpClient();
+
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://hpapi.ddns.net:14245/api/")
+                .baseUrl("http://177.70.244.192:14245/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
