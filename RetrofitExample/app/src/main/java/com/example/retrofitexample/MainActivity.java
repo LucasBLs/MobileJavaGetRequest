@@ -32,32 +32,35 @@ public class MainActivity extends AppCompatActivity {
 
         JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
 
-        Call<List<Cliente>> call = jsonPlaceHolderApi.getClientes();
+        Call<List<Item>> call = jsonPlaceHolderApi.getItens();
 
-        call.enqueue(new Callback<List<Cliente>>() {
+        call.enqueue(new Callback<List<Item>>() {
             @Override
-            public void onResponse(Call<List<Cliente>> call, Response<List<Cliente>> response) {
+            public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
                 if(!response.isSuccessful())
                 {
                     textViewResult.setText("Code: " + response.code());
                     return;
                 }
 
-                List<Cliente> clientes = response.body();
+                List<Item> itens = response.body();
 
-                for (Cliente cliente : clientes)
+                for (Item item : itens)
                 {
                     String content = "";
-                    content += "ID: " + cliente.getCod_clnt() + "\n";
-                    content += "User ID: " + cliente.getUsuario() + "\n";
-                    content += "Password: " + cliente.getSenha() + "\n";
+                    content += "NÚMERO: " + item.getNr_item() + "\n";
+                    content += "EAN: " + item.getEan_item() + "\n";
+                    content += "DESCRIÇÃO: " + item.getDesc_item() + "\n";
+                    content += "QUANTIDADE: " + item.getQuantidade() + "\n";
+                    content += "VALOR: " + item.getValor() + "\n";
+                    content += "SITUAÇÃO: " + item.getSituacao() + "\n";
 
                     textViewResult.append(content);
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Cliente>> call, Throwable t) {
+            public void onFailure(Call<List<Item>> call, Throwable t) {
                 textViewResult.setText(t.getMessage());
             }
         });
