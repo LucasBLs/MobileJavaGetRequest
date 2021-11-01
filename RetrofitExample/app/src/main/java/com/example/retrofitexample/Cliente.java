@@ -19,4 +19,11 @@ public class Cliente {
     public String getSenha() {
         return senha;
     }
+
+    public String getStatus_del_lgo() {
+        return status_del_lgo;
+    }
+    public int getFk_pessoa_cod_psoa() {
+        return fk_pessoa_cod_psoa;
+    }
 }
