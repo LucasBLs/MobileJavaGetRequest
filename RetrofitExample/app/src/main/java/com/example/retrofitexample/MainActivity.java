@@ -49,8 +49,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+<<<<<<< HEAD
         textViewResult = findViewById(R.id.ReturnById);
         OkHttpClient client = new OkHttpClient();
+=======
+        textViewResult = findViewById(R.id.text_view_result);
+        //OkHttpClient client = new OkHttpClient();
+
+>>>>>>> d542f5acdea3f6d3f85d603a0df726175e7ae9c3
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://177.70.244.192:14245/api/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -58,16 +64,23 @@ public class MainActivity extends AppCompatActivity {
 
         JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
 
-        Call<List<Cliente>> call = jsonPlaceHolderApi.getClientes();
+        Call<List<Item>> call = jsonPlaceHolderApi.getItens();
 
-        call.enqueue(new Callback<List<Cliente>>() {
+        call.enqueue(new Callback<List<Item>>() {
             @Override
+<<<<<<< HEAD
             public void onResponse(Call<List<Cliente>> call, Response<List<Cliente>> response) {
                 if (!response.isSuccessful()) {
+=======
+            public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
+                if(!response.isSuccessful())
+                {
+>>>>>>> d542f5acdea3f6d3f85d603a0df726175e7ae9c3
                     textViewResult.setText("Code: " + response.code());
                     return;
                 }
 
+<<<<<<< HEAD
                 List<Cliente> clientes = response.body();
                 mButton = (Button) findViewById(R.id.btnlogin);
                 user = (EditText) findViewById(R.id.txtnomelogin);
@@ -78,6 +91,19 @@ public class MainActivity extends AppCompatActivity {
                             public void onClick(View view) {
                                 String usuario = user.getText().toString();
                                 String senha = password.getText().toString();
+=======
+                List<Item> itens = response.body();
+
+                for (Item item : itens)
+                {
+                    String content = "";
+                    content += "NÚMERO: " + item.getNr_item() + "\n";
+                    content += "EAN: " + item.getEan_item() + "\n";
+                    content += "DESCRIÇÃO: " + item.getDesc_item() + "\n";
+                    content += "QUANTIDADE: " + item.getQuantidade() + "\n";
+                    content += "VALOR: " + item.getValor() + "\n";
+                    content += "SITUAÇÃO: " + item.getSituacao() + "\n";
+>>>>>>> d542f5acdea3f6d3f85d603a0df726175e7ae9c3
 
                                 try {
                                     senha = SHA1(senha);
@@ -102,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<Cliente>> call, Throwable t) {
+            public void onFailure(Call<List<Item>> call, Throwable t) {
                 textViewResult.setText(t.getMessage());
             }
         });
